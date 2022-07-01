@@ -1,32 +1,33 @@
 package goany
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
 
 type Response struct {
-	Value bool  `json:"value"`
-	Error error `json:"error"`
+	Value bool `json:"value"`
 }
 
-func RequestOne(ch chan<- Response) {
+func RequestOne(ch chan<- Response, err chan<- error) {
+	time.Sleep(20 * time.Second)
+
 	fmt.Println("teste 1")
 	response := &Response{
 		Value: true,
-		Error: nil,
 	}
+	err <- nil
 	ch <- *response
-	defer close(ch)
 }
 
-func RequestTwo(ch chan<- Response) {
+func RequestTwo(ch chan<- Response, err chan<- error) {
 	time.Sleep(10 * time.Second)
 	fmt.Println("teste 2")
 	response := &Response{
-		Value: true,
-		Error: nil,
+		Value: false,
 	}
+	err <- errors.New("error creating")
 	ch <- *response
-	defer close(ch)
+
 }
