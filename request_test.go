@@ -61,10 +61,9 @@ func TestAsyncWorker(t *testing.T) {
 
 		data := <-result
 
-
-		err := <- errCh
+		err := <-errCh
 		fmt.Printf("%v\v", err)
-		err = <- errCh
+		err = <-errCh
 		fmt.Printf("%v\v", err)
 
 		if data.Value {

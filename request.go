@@ -11,7 +11,7 @@ type Response struct {
 }
 
 func RequestOne(ch chan<- Response, err chan<- error) {
-	time.Sleep(20 * time.Second)
+	time.Sleep(10 * time.Second)
 
 	fmt.Println("teste 1")
 	response := &Response{
@@ -22,7 +22,7 @@ func RequestOne(ch chan<- Response, err chan<- error) {
 }
 
 func RequestTwo(ch chan<- Response, err chan<- error) {
-	time.Sleep(10 * time.Second)
+	time.Sleep(5 * time.Second)
 	fmt.Println("teste 2")
 	response := &Response{
 		Value: false,
