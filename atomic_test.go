@@ -28,15 +28,19 @@ func TestValidAtomic(t *testing.T) {
 			t.Fail()
 		}
 	})
+}
 
+func TestConcurrentExample(t *testing.T) {
 	t.Run("Should be execution one error and one sucess", func(t *testing.T) {
 		var count int64
 		var response goany.Response
 		result := make(chan goany.Response, 1)
-		errCh := make(chan error, 1)
+		errCh := make(chan error, 2)
 		go goany.AtomicReq("sucess but after a ling time", &count, result, errCh)
 		go goany.AtomicReq("error", &count, result, errCh)
 
+		<-result
+		<-errCh
 		select {
 		case <-result:
 			fmt.Println(result)

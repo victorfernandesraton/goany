@@ -14,7 +14,8 @@ func AtomicReq(text string, count *int64, res chan<- Response, err chan<- error)
 	}
 	if text == "error" {
 		err <- errors.New("simple error response")
+	} else {
+		res <- result
 	}
-	atomic.AddInt64(count, 1)
-	res <- result
+	defer atomic.AddInt64(count, 1)
 }
